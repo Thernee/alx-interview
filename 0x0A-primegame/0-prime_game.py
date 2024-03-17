@@ -8,7 +8,7 @@ def isWinner(x, nums):
     """
     Determine the winner of a Prime Game
     """
-    if x is None or nums is None or x == 0:
+    if x is None or nums is None or x <= 0:
         return None
     # primes_list = sieve_of_Eratosthenes(max(nums))
     # temp = [primes % 2 == 0 for primes in primes_list]
