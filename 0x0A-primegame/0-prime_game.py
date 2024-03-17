@@ -6,47 +6,43 @@ Prime Game Module
 
 def isWinner(x, nums):
     """
-    Determine winner of prime game
+    Determine the winner of a Prime Game
     """
-    if x is None or nums is None or x == 0 or nums == []:
+    if x is None or nums is None or x == 0:
         return None
-    ben, maria = 0, 0
-    primes = filter_primes(nums)
+    # primes_list = sieve_of_Eratosthenes(max(nums))
+    # temp = [primes % 2 == 0 for primes in primes_list]
 
-    for num in range(x):
-        if primes[num] % 2 == 0:
-            ben += 1
-        else:
-            maria += 1
+    temp = [True for num in nums if len(sieve_of_Eratosthenes(num)) % 2 == 0]
+    ben = sum(temp)
+    maria = len(nums) - ben
 
     if ben == maria:
-        # return None
-        return 'Maria'
-    elif ben > maria:
-        return 'Ben'
-    return 'Maria'
+        return None
+    elif ben < maria:
+        return "Maria"
+    else:
+        return "Ben"
 
 
-def filter_primes(arr):
+def sieve_of_Eratosthenes(n):
     """
-    Filter primes
+    Return primes between 1 and n (inclusive)
     """
+    # if n < 2:
+    #     return []
+    # primes = [True for i in range(n + 1)]
+    # primes[0] = primes[1] = False
+    # for i in range(2, int(n ** 0.5) + 1):
+    #     if primes[i]:
+    #         for j in range(i * i, n + 1, i):
+    #             primes[j] = False
+    # return [i for i in range(n + 1) if primes[i]]
     primes = []
-    for num in arr:
-        if is_prime(num):
-            primes.append(num)
-        else:
-            primes.append(0)
+    filter = [True] * (n + 1)
+    for prime in range(2, n + 1):
+        if (filter[prime]):
+            primes.append(prime)
+            for i in range(prime, n + 1, prime):
+                filter[i] = False
     return primes
-
-
-def is_prime(num):
-    """
-    Check if number is prime
-    """
-    if num < 2:
-        return False
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
